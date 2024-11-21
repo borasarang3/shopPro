@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,37 +36,52 @@ class ItemRepositoryTest {
     @PersistenceContext
     EntityManager entityManager;
 
+    @Test
+    @DisplayName("양방향 테스트")
+    @Transactional
+    public void selectItem() {
 
-//    @Test
-//    @DisplayName("상품 저장 테스트")
-//    public void createItemTest() {
-//
-//
-//      for (int i = 0; i < 200; i++) {
-//
-//
-//          Item item =
-//                  Item.builder()
-//                          .itemNm("테스트상품")
-//                          .price(10000)
-//                          .itemDetail("테스트상품 상세설명")
-//                          .itemSellStatus(ItemSellStatus.SELL)
-//                          .stockNumber(100)
-//                          .regTime(LocalDateTime.now())
-//                          .updateTime(LocalDateTime.now())
-//                          .build();
-//
-//          item.setItemNm(item.getItemNm() + i);
-//          item.setItemDetail(item.getItemDetail() + i);
-//          item.setPrice(item.getPrice() + i);
-//
-//          Item item1 =
-//          itemRepository.save(item);
-//
-//          log.info(item1);
-//      }
-//
-//    }
+        //필요한값 부모id 411L
+        //실행내용 부모를 item을 검색한다. 특정 pk값을 가지고
+        Item item =
+        itemRepository.findById(405L).get();
+
+        //결과 예상 부모를 검색하면 부모와 + 자식의 모든데이터를 받는다.
+
+        log.info(item);
+        log.info("아이템명 " + item.getItemNm());
+        log.info("아이템 이미지 :  " + item.getItemImgList().get(0).getImgUrl());
+
+    }
+
+    @Test
+    @DisplayName("상품 저장 테스트")
+    public void createItemTest() {
+
+
+      for (int i = 0; i < 200; i++) {
+
+
+          Item item =
+                  Item.builder()
+                          .itemNm("테스트상품")
+                          .price(10000)
+                          .itemDetail("테스트상품 상세설명")
+                          .itemSellStatus(ItemSellStatus.SELL)
+                          .stockNumber(100)
+                          .build();
+
+          item.setItemNm(item.getItemNm() + i);
+          item.setItemDetail(item.getItemDetail() + i);
+          item.setPrice(item.getPrice() + i);
+
+          Item item1 =
+          itemRepository.save(item);
+
+          log.info(item1);
+      }
+
+    }
 
     @Test
     @DisplayName("제품명으로 검색 2가지에서 다시 2가지 검색")

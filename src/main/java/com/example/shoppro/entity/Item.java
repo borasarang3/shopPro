@@ -6,9 +6,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString   //(exclude = "itemImgList") //toString 변수 제외할 변수
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -35,5 +38,13 @@ public class Item extends BaseEntity {
 
     @Enumerated(EnumType.STRING)    //enum 가지고 만듦 YES/NO , SELL/SOLD_OUT
     private ItemSellStatus itemSellStatus; // 상품 판매 상태
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "member_id")
+//    private Member member;
+
+    @OneToMany
+    @JoinColumn(name = "item_id")
+    private List<ItemImg> itemImgList;
 
 }
