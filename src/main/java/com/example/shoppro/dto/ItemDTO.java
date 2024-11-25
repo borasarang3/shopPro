@@ -11,7 +11,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +45,10 @@ public class ItemDTO {
     private ItemSellStatus itemSellStatus; // 상품 판매 상태
 
     private List<ItemImgDTO> itemImgDTOList;
+
+    private String createBy;
+    private LocalDateTime regTime;
+    private LocalDateTime updateTime;
 
     public ItemDTO setItemImgDTOList(List<ItemImg> itemImgList) {
 

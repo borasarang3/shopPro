@@ -37,6 +37,15 @@ class ItemRepositoryTest {
     EntityManager entityManager;
 
     @Test
+    @Transactional
+    public void findByIdAndCreateByTest() {
+        Long id = 405L;
+        String email = "test@a.a";
+
+        log.info(itemRepository.findByIdAndCreateBy(id, email));
+    }
+
+    @Test
     @DisplayName("양방향 테스트")
     @Transactional
     public void selectItem() {
