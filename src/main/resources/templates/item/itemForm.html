@@ -56,11 +56,13 @@
                             </select>
                         </div>
                     </div>
+                    <!--이미지 미리보기-->
                     <div class="col-12">
                         <div class="row  main imgpreview">
 
                         </div>
-                        <div class="row imgpreviewinput imgpreview">
+                        <div class="row row-cols-md-3 imgpreviewinput imgpreview">
+
 
                         </div>
 
@@ -79,7 +81,12 @@
 
                     <div class="col-12">
                         <button class="btn btn-dark">저장</button>
-                        <button type="button">목록</button>
+                        <button type="button"  class="btn btn-dark listbtn">목록</button>
+                        <script>
+                            $(".listbtn").on("click", function () {
+                                location.href = "/admin/item/list"
+                            })
+                        </script>
                     </div>
                 </div>
 
@@ -92,7 +99,7 @@
 
 <th:block layout:fragment="script">
 
-    <script>
+    <script th:inline="javascript">
         $(document).ready(function () {
             let msg = [[${msg}]]
             if(msg!=null){
@@ -164,6 +171,7 @@
                         //클래스중에 mainimg가 있다면
                         console.log("이건 대표이미지 인풋입니다.")
                         readURL(this);
+                        $(".mainimg").val()
 
                     }else {
                         readURL1(this);
@@ -182,19 +190,35 @@
                     reader.onload = function(e) {
                         let inputtag = document.createElement("input")
 
+
                         inputtag.type = "file"
                         inputtag.name = "multipartFile"
-                        inputtag.files = input.files
+                        //inputtag.files = input.files //참조값 주소
+
+                        const dataTranster = new DataTransfer();
+                        const fileDatas = Array.from(input.files);
+                        /*신규 파일데이터는..
+                        new DataTransfer();
+                        이걸로 files 라는 객체를 만들수 있어서..
+                        이걸로 만들어서 배열 돌리면서 추가추가 한거임*/
+                        fileDatas.forEach(file =>  dataTranster.items.add(file) );
+                        inputtag.files = dataTranster.files;
+
 
                         let str1 = ` <div class="preview col">
-                                  <img width="100%" src="${e.target.result}">
-                                  <button type='button' class='bb'>올리지 않기</button>
-                                </div>`
+                                        <img width="100%" src="${e.target.result}">
+                                        <button type='button' class='bb'>올리지 않기</button>
+                                    </div>`
                         $(".main").html(str1)
                         $(".main").find('div:eq(0)').append(inputtag)
+                        $(".main").find('input').hide()
+                        $(".imgInput").val("")
+
+
 
                     };
                     reader.readAsDataURL(input.files[0]);
+
 
                 }
             }
@@ -206,21 +230,28 @@
                         let inputtag = document.createElement("input")
                         inputtag.type = "file"
                         inputtag.name = "multipartFile"
-                        inputtag.files = input.files
+                        /*inputtag.files = input.files*/
+                        const dataTranster = new DataTransfer();
+                        const $fileDatas = Array.from(input.files);
+                        $fileDatas.forEach(file =>  dataTranster.items.add(file) );
+                        inputtag.files = dataTranster.files;
 
                         let str1 = ` <div class="preview col">
                                   <img width="100%" src="${e.target.result}">
                                   <button type='button' class='bb'>올리지 않기</button>
                                 </div>`
-                        $(".imgpreviewinput").append(str1)
+                        $(".imgpreviewinput").prepend(str1)
                         // $(".imgpreviewinput").append(str)
                         $(".imgpreviewinput").find('div:eq(0)').prepend(inputtag)
                         $(".imgpreviewinput").find('input:eq(0)').hide()
+
+                        $(".imgInput").val("")
 
                     };
                     reader.readAsDataURL(input.files[0]);
 
                 }
+
             }
 
 

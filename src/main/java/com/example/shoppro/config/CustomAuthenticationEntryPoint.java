@@ -14,7 +14,7 @@ public class CustomAuthenticationEntryPoint implements
         AuthenticationEntryPoint {
     //http request header에
     //XMLHttpRequest라는 값이 세팅되어 요청이 옴
-    // 인증되지 않은 사용자가 ajax로 리소스를 요청할 경우
+    // 인증되지 ㅇ낳ㅇ느 사용자가 ajax로 리소스를 요청할 경우
     //Unauthorized 에러 발생
 
     @Override

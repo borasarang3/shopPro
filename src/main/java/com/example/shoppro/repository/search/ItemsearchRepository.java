@@ -13,6 +13,8 @@ public interface ItemsearchRepository {
 
     Page<Item> getAdminItemPage(PageRequestDTO pageRequestDTO, Pageable pageable, String email);
 
+    Page<Item> getAdminItemPage(PageRequestDTO pageRequestDTO, Pageable pageable);
+
 
 
 

@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service    // 비즈니스 로직을 담당하는 서비스 계층 클래스에
 @Transactional  //이 어노테이션을 선언합니다. 로직을 처리핟가ㅏ
-                // 에러가 발생하였다면 변경된 데이터로직을 수행하기
-                // 이전 상태로 롤백시켜줍니다.
+// 에러가 발생하였다면 변경된 데이터로직을 수행하기
+// 이전 상태로 롤백시켜줍니다.
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
 
@@ -46,7 +46,7 @@ public class MemberService implements UserDetailsService {
 
     //회원가입
     public Member saveMember(MemberDTO memberDTO) {
-        //컨트롤러에서 받은 MemberDTO를 meber entity로 변경
+        //컨트롤러에서 받은 MemberDTO를 member entity로 변경
 
 
         Member member =
@@ -55,7 +55,7 @@ public class MemberService implements UserDetailsService {
         validateDuplicateMember(member.getEmail());
 
         member =
-        memberRepository.save(member);
+                memberRepository.save(member);
 
         return member;
 
@@ -66,7 +66,7 @@ public class MemberService implements UserDetailsService {
     private void validateDuplicateMember(String email) {
 
         Member member =
-        memberRepository.findByEmail(email);
+                memberRepository.findByEmail(email);
         //member 이 null 이라는 건 db에 회원가입이
         // 되어있지 않은 email이니 회원가입이 가능하고
         // null이 아니라는건 db에 회원이 가입되었으니

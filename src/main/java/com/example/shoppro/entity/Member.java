@@ -2,6 +2,7 @@ package com.example.shoppro.entity;
 
 import com.example.shoppro.constant.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
@@ -15,6 +16,7 @@ import lombok.*;
 public class Member {
 
     @Id
+//    @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -30,5 +32,7 @@ public class Member {
     //권한 2개
     @Enumerated(EnumType.STRING)
     private Role role;
+
+
 
 }

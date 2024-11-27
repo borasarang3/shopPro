@@ -40,9 +40,6 @@ public class PageRequestDTO {
   //<option value="1w">1주전</option>
   // </select>
 
-  private  Long correspondent_num;
-
-  private Long company_num;
 
   public String[] getTypes(){
 
