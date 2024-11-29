@@ -14,7 +14,6 @@ import java.util.List;
 @ToString //(exclude = "itemImgList")  //toString 변수 제외할 변수명
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Table(name = "orders")
 public class Order {
 
