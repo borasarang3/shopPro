@@ -32,4 +32,7 @@ public class OrderHistDTO {
         orderItemDTOList.add(itemDTO);
     }
 
+//    public OrderHistDTO setOrderItemDTOList(OrderItemDTO itemDTO) {
+//        orderItemDTOList.
+//    }
 }

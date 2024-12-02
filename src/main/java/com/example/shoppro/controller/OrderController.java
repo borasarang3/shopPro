@@ -110,6 +110,9 @@ public class OrderController {
         orderService.getOrderList(email, pageable);
         //페이징처리에 필요하던 것들 start end next pre t/f total
 
+        //단방향이라면
+        //order, orderItem을 가져온다
+
         model.addAttribute("orders", orderHistDTOPage);
         //html 들어가서 getContent() 함수 호출
         model.addAttribute("page", pageable.getPageNumber());

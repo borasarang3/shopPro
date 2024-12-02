@@ -66,15 +66,19 @@
 
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
+                    <li class="page-item" th:classappend="${orders.number eq 0 ? 'disabled' :  ''}">
+                        <a class="page-link" th:href="@{'/orders/' + ${orders.number -1}}" th:text="${page}">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
+
+                    <th:block th:each="page: ${#numbers.sequence(start, end)}">
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{'/orders/' + ${page -1}}" th:text="${page}">1</a>
+                        </li>
+                    </th:block>
+
+                    <li class="page-item" th:classappend="${orders.number+1 ge orders.totalPages ? 'disabled' :  ''}">
                         <a class="page-link" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
