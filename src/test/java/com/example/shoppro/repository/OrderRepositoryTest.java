@@ -79,7 +79,7 @@ class OrderRepositoryTest {
             List<OrderItem> orderItemList =
                     orderItemRepository.findByOrderId(order.getId());
 
-            List<OrderItemDTO> orderItemDTOS =
+          //  List<OrderItemDTO> orderItemDTOS =
 //            orderItemList.stream().map(orderItem -> modelMapper.map(orderItem, OrderItemDTO.class)
 //                            .setId(orderItem.getOrder().getId()))
 //                    .collect(Collectors.toList());

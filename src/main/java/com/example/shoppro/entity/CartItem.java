@@ -30,6 +30,19 @@ public class CartItem {
     //아이템 한 row당
     private int count;
 
+    public static CartItem createCartItem(Cart cart , Item item, int count) {
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setItem(item);
+        cartItem.setCount(count);
+
+        return cartItem;
+    }
+
+    // count 증가
+    public void addCount(int count) {
+        this.count += count;
+    }
 
 
 }
