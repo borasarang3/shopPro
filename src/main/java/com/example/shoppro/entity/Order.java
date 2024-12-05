@@ -42,6 +42,10 @@ public class Order {
         this.orderItemList.add(item);
     }
 
+    public void setOrderItemList(List<OrderItem> orderItemList) {
+        this.orderItemList = orderItemList;
+    }
+
     private LocalDateTime orderDate;    //주문일
 
     @Enumerated(EnumType.STRING)

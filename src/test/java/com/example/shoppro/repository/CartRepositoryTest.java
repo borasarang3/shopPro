@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @Log4j2
 class CartRepositoryTest {
@@ -59,7 +57,7 @@ class CartRepositoryTest {
 
         //찾은 회원으로 장바구니가 있는지 확인
         Cart cart =
-                cartRepository.findByMember_Id(member.getId());
+                cartRepository.findByMemberId(member.getId());
         if (cart == null) {
             log.info("현재 카드가 존재하지 않습니다.");
             log.info("카트 생성");

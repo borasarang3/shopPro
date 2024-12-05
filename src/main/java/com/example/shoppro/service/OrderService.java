@@ -1,10 +1,12 @@
 package com.example.shoppro.service;
 
 import com.example.shoppro.constant.OrderStatus;
+import com.example.shoppro.dto.CartOrderDTO;
 import com.example.shoppro.dto.OrderDTO;
 import com.example.shoppro.dto.OrderHistDTO;
 import com.example.shoppro.dto.OrderItemDTO;
 import com.example.shoppro.entity.*;
+import com.example.shoppro.repository.CartItemRepository;
 import com.example.shoppro.repository.ItemRepository;
 import com.example.shoppro.repository.MemberRepository;
 import com.example.shoppro.repository.OrderRepository;
@@ -31,6 +33,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
+
 
 
     //주문 order, orderItem
@@ -96,7 +99,7 @@ public class OrderService {
 
     public Long order(OrderDTO orderDTO, String email){   //principal.getName()로 가져온다. 로그인을 했다면
         //현재 선택한 아이템의 id는 orderDTO로 들어온다 이값으로 판매중인 item Entity를 가져온다.
-        Item  item = itemRepository.findById(  orderDTO.getItemID()  )
+        Item  item = itemRepository.findById(  orderDTO.getItemId()  )
                 .orElseThrow(EntityNotFoundException::new); //사려는 아이템을 찾지 못했다면 예외처리
 
         //email을 통해서 현재 로그인한 사용자를 가져온다.
@@ -147,6 +150,44 @@ public class OrderService {
         }
 
 
+
+    }
+
+
+    public Long orders(List<OrderDTO> orderDTOList, String email){
+
+        //주문을 했다면 판매하고 있는 상품의 수량 변경
+
+
+        Member member = memberRepository.findByEmail(email);
+        List<OrderItem> orderItemList = new ArrayList<>();
+        Order  order = new Order();
+
+        for(OrderDTO orderDTO   : orderDTOList){
+            Item item =
+                    itemRepository.findById(orderDTO.getItemId())
+                            .orElseThrow(EntityNotFoundException::new);
+
+
+            OrderItem orderItem = new OrderItem();
+            orderItem.setItem(item);
+            orderItem.setCount(orderDTO.getCount()  );
+            orderItem.setOrderPrice(item.getPrice());
+            orderItem.setOrder(order);
+
+            item.setStockNumber(item.getStockNumber()   - orderDTO.getCount() );
+
+            orderItemList.add(orderItem);
+
+        }
+        order.setMember(member);
+        order.setOrderStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        order.setOrderItemList(orderItemList);
+
+        orderRepository.save(order);
+
+        return order.getId();
 
     }
 
@@ -204,5 +245,7 @@ public class OrderService {
         }
         return new PageImpl<OrderHistDTO>(orderHistDTOList, pageable, totalCount);
     }
+
+
 
 }

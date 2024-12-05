@@ -15,7 +15,7 @@ import lombok.ToString;
 public class OrderDTO {
 
     @NotNull(message = "정상적인 주문페이지가 아닙니다. 상품페이지로 다시 와주세요.")
-    private Long itemID;    // 기존에는 id를 받기로 했는데
+    private Long itemId;    // 기존에는 id를 받기로 했는데
                             //itemId로 받기로 했다.
 
     @Min(value = 1, message = "최소 주문 수량은 1개입니다.")

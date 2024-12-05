@@ -9,7 +9,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     //  Member member = findByEmail(email);
     //  cartRepository.findByMemberID(member.id);
     // select * from Cart c where c.member.email
-    public Cart findByMember_Id (Long member_id);
+    public Cart findByMemberId(Long member_id);
 
     public Cart findByMemberEmail(String email);
 

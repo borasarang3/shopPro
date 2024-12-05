@@ -25,14 +25,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Log4j2
 public class ItemService {
-    
+
     private final ItemRepository itemRepository;
     private final ModelMapper modelMapper;
-    
+
     //이미지 등록할 itemimgservice 의존성추가
     private final ItemImgService itemImgService;
-    
-    
+
+
     //상품등록
     public Long saveItem(ItemDTO itemDTO , List<MultipartFile> multipartFiles) throws IOException {
 
@@ -40,7 +40,7 @@ public class ItemService {
         Item item = modelMapper.map(itemDTO, Item.class);
 
         item =
-        itemRepository.save(item);
+                itemRepository.save(item);
 
         //이미지등록 추가 할예정
         itemImgService.saveImg(item.getId(),multipartFiles );
@@ -50,7 +50,7 @@ public class ItemService {
 
 
 
-        
+
     }
 
 
@@ -58,7 +58,7 @@ public class ItemService {
 
 
         Item item =
-        itemRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+                itemRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         ItemDTO itemDTO = modelMapper.map(item, ItemDTO.class)
                 .setItemImgDTOList(item.getItemImgList());
@@ -120,8 +120,8 @@ public class ItemService {
         // 아이템 수정
 
         Item item =
-        itemRepository.findById(    itemDTO.getId()   )
-                .orElseThrow(EntityNotFoundException::new);
+                itemRepository.findById(    itemDTO.getId()   )
+                        .orElseThrow(EntityNotFoundException::new);
 
         //set
         item.setItemNm(itemDTO.getItemNm()  );
@@ -159,13 +159,17 @@ public class ItemService {
         return  null;
     }
 
-    public void remove (Long id) {
+
+    public void remove(Long id){
         log.info("서비스로 들어온 삭제할 아이템번호 : " + id);
+
 
         itemRepository.deleteById(id);
 
 
     }
+
+
 
     public PageResponseDTO<ItemDTO> mainlist(PageRequestDTO pageRequestDTO) {
 
@@ -173,7 +177,9 @@ public class ItemService {
         Page<Item> items =
                 itemRepository.getAdminItemPage(pageRequestDTO, pageable);
         List<ItemDTO> itemDTOPage =
-                items.getContent().stream().map(item -> modelMapper.map(item, ItemDTO.class))
+                items.getContent().stream().map(item -> modelMapper.map(item, ItemDTO.class).setItemImgDTOList(
+                                item.getItemImgList()
+                        )   )
                         .collect(Collectors.toList());
 
         PageResponseDTO<ItemDTO> itemDTOPageResponseDTO
@@ -184,8 +190,6 @@ public class ItemService {
                 .build();
         return itemDTOPageResponseDTO;
     }
-
-
 
 
 
